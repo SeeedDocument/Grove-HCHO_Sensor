@@ -12,7 +12,7 @@ tags: grove_analog, io_5v, plat_duino, plat_linkit
 
 ![](https://raw.githubusercontent.com/SeeedDocument/Grove-HCHO_Sensor/master/img/HCHO_Sensor_01.jpg)
 
-The Grove - HCHO Sensor is a semiconductor VOC gas sensor. Its design is based on WSP2110 whose conductivity changes with the concentration of VOC gas in air. Through the circuit, the conductivity can be converted to output signal that corresponding to the gas concentration. This sensor has a very high sensitivity and stability, it can detect the gas whose concentration is up to 1ppm. It’s suitable for detecting formaldehyde, benzene, toluene and other volatile components. This product can be used to detect harmful gas in the home environment. Therefore, it’s a good assistant for you to improve indoor environment quality of life.
+The Grove - HCHO Sensor is a semiconductor VOC gas sensor. Its design is based on WSP2110 whose conductivity changes with the concentration of VOC gas in air. Through the circuit, the conductivity can be converted to output signal that corresponding to the gas concentration. This sensor can detect the gas whose concentration is up to 1ppm. It’s suitable for detecting formaldehyde, benzene, toluene and other volatile components. This product can be used to detect harmful gas in the home environment. Therefore, it’s a good assistant for you to improve indoor environment quality of life.
 
 [![](https://raw.githubusercontent.com/SeeedDocument/common/master/Get_One_Now_Banner.png)](http://www.seeedstudio.com/depot/grove-hcho-sensor-p-1593.html)
 
@@ -105,6 +105,29 @@ Then move the sensor into the office, and read the HCHO ppm value:
 From the Typical Sensitivity Curve we could know that the detection range is 1-50ppm.
 
 ![](https://raw.githubusercontent.com/SeeedDocument/Grove-HCHO_Sensor/master/img/Sensitivity_Characteristic.jpg)
+
+To detect other VOC gas, you could calculate Rs/R0, then refer to the sensitivity characteristic diagram and find the gas concentration. Or use the following python script to fit the typical sensitivity curve and calculate the value of a and b:
+
+`ppm = 10 ^ ((log10(Rs/R0) + a) / b)`
+
+```
+# coding=utf-8
+# calculate a and b of HCHO
+import numpy as np
+import matplotlib.pyplot as plt
+
+#get the measure data from the Typical Sensitivity Curve
+x = np.array([1, 5, 10, 20, 40])
+y = np.array([1.21, 0.56, 0.4, 0.3, 0.21])
+
+plt.subplot(221)
+plt.loglog(x,y,lw=2)
+#plt.ylim(0,1.5)  
+plt.xlabel('log(x)')  
+plt.ylabel('log(y)')  
+plt.show()  
+```
+
 
 ### With Raspberry Pi
 
